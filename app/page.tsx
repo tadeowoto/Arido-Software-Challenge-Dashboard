@@ -1,5 +1,6 @@
 import Table from "@/components/Table";
 import FilterForm from "@/components/FilterForm";
+import response from "@/mocks/response.json";
 
 export default function Home() {
   return (
