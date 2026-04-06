@@ -1,24 +1,47 @@
-export default function Table() {
+interface TableProps {
+  columns: { header: string; key: string }[];
+}
+
+export default function Table({ columns }: TableProps) {
   return (
-    <table className="w-full h-fit text-black">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Security Group</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>
-            <a href="mailto:7aMlE@example.com">7aMlE@example.com</a>
-          </td>
-          <td>Admin</td>
-          <td>Active</td>
-        </tr>
-      </tbody>
-    </table>
+    <div className="p-1">
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="border-b border-border-dark">
+            {columns.map((col, index) => (
+              <th
+                key={index}
+                className="py-3 px-2 text-highlight-blue text-xs text-pretty"
+              >
+                {col.header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="text-sm ">
+          <tr className="border-b border-border-dark/50">
+            <td className="py-3 px-2">Wotoszyn</td>
+            <td className="py-3 px-2">Active</td>
+            <td className="py-3 px-2">2026-04-06</td>
+            <td className="py-3 px-2">Admin</td>
+            <td className="py-3 px-2">High</td>
+          </tr>
+          <tr className="border-b border-border-dark/50">
+            <td className="py-3 px-2">Wotoszyn</td>
+            <td className="py-3 px-2">Active</td>
+            <td className="py-3 px-2">2026-04-06</td>
+            <td className="py-3 px-2">Admin</td>
+            <td className="py-3 px-2">High</td>
+          </tr>
+          <tr className="border-b border-border-dark/50">
+            <td className="py-3 px-2">Wotoszyn</td>
+            <td className="py-3 px-2">Active</td>
+            <td className="py-3 px-2">2026-04-06</td>
+            <td className="py-3 px-2">Admin</td>
+            <td className="py-3 px-2">High</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 }

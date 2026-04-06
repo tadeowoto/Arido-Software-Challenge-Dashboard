@@ -1,7 +1,7 @@
 import Table from "@/components/Table";
 import FilterForm from "@/components/FilterForm";
-import response from "@/mocks/response.json";
-
+import userResponse from "@/mocks/userResponse.json";
+import { USER_COLUMNS } from "@/data/data";
 export default function Home() {
   return (
     <main className="w-full min-h-screen h-screen bg-bg-dark text-white">
@@ -14,7 +14,7 @@ export default function Home() {
         </div>
       </header>
       <FilterForm />
-      <Table />
+      <Table columns={USER_COLUMNS} />
     </main>
   );
 }
