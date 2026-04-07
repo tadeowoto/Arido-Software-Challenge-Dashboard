@@ -3,7 +3,7 @@ export interface UserResponse {
     userId: number;
     username: string;
     status: string;
-    createdAt: string;
+    createdAt: string | null;
     groups: group[];
 }
 interface group {

@@ -1,47 +1,69 @@
+import { UserResponse } from "@/types/userTypes";
+
 interface TableProps {
   columns: { header: string; key: string }[];
+  data: UserResponse[];
 }
 
-export default function Table({ columns }: TableProps) {
+export default function Table({ columns, data }: TableProps) {
   return (
-    <div className="p-1">
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="border-b border-border-dark">
-            {columns.map((col, index) => (
-              <th
+    <div className="w-full px-4 py-2">
+      <div className="w-full overflow-x-auto rounded-xl border border-border-dark/50 bg-surface-dark/20 shadow-lg">
+        <table className="w-full min-w-200 text-center border-collapse">
+          <thead>
+            <tr className="border-b border-border-dark/60 bg-surface-dark/40">
+              {columns.map((col, index) => (
+                <th
+                  key={index}
+                  className="py-5 px-6 text-highlight-blue text-[11px] uppercase tracking-[0.2em] font-black opacity-80 text-center"
+                >
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="text-sm">
+            {data.map((row, index) => (
+              <tr
                 key={index}
-                className="py-3 px-2 text-highlight-blue text-xs text-pretty"
+                className="border-b border-border-dark/40 hover:bg-white/2 transition-colors h-20 min-h-20"
               >
-                {col.header}
-              </th>
+                <td className="px-6 py-2 align-middle">
+                  <p className="font-medium text-white">{row.username}</p>
+                </td>
+                <td className="px-6 py-2 align-middle">
+                  <p
+                    className={`inline-block px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${
+                      row.status === "ACTIVE"
+                        ? "bg-green-500/10 text-green-400"
+                        : "bg-red-500/10 text-red-400"
+                    }`}
+                  >
+                    {row.status}
+                  </p>
+                </td>
+                <td className="px-6 py-2 align-middle">
+                  <p className="text-text-secondary">{row.createdAt || "—"}</p>
+                </td>
+                <td className="px-6 py-2 align-middle">
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    {row.groups.map((group, index) => (
+                      <div key={index} className="flex flex-col items-center">
+                        <p className="text-highlight-orange font-bold text-[11px] uppercase tracking-tighter">
+                          {group.groupName}
+                        </p>
+                        <p className="text-highlight-blue text-[10px] font-black uppercase tracking-widest opacity-80">
+                          {group.accessLevel}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </td>
+              </tr>
             ))}
-          </tr>
-        </thead>
-        <tbody className="text-sm ">
-          <tr className="border-b border-border-dark/50">
-            <td className="py-3 px-2">Wotoszyn</td>
-            <td className="py-3 px-2">Active</td>
-            <td className="py-3 px-2">2026-04-06</td>
-            <td className="py-3 px-2">Admin</td>
-            <td className="py-3 px-2">High</td>
-          </tr>
-          <tr className="border-b border-border-dark/50">
-            <td className="py-3 px-2">Wotoszyn</td>
-            <td className="py-3 px-2">Active</td>
-            <td className="py-3 px-2">2026-04-06</td>
-            <td className="py-3 px-2">Admin</td>
-            <td className="py-3 px-2">High</td>
-          </tr>
-          <tr className="border-b border-border-dark/50">
-            <td className="py-3 px-2">Wotoszyn</td>
-            <td className="py-3 px-2">Active</td>
-            <td className="py-3 px-2">2026-04-06</td>
-            <td className="py-3 px-2">Admin</td>
-            <td className="py-3 px-2">High</td>
-          </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

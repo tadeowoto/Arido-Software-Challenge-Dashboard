@@ -108,6 +108,10 @@
             {
                 "groupName": "Sistemas",
                 "accessLevel": "Administrator"
+            },
+            {
+                "groupName": "Mantenimiento",
+                "accessLevel": "Read"
             }
         ]
     },

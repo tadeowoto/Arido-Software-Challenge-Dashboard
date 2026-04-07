@@ -4,5 +4,4 @@ export const USER_COLUMNS = [
   { header: 'Status', key: 'status' },
   { header: 'Fecha de creación', key: 'createdAt' },
   { header: 'Grupos', key: 'groups' },
-  { header: 'Nivel de acceso', key: 'accessLevel' }
 ];
