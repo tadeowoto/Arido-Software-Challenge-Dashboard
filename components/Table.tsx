@@ -12,7 +12,7 @@ function handleRowClick(row: UserResponse) {
 
 export default function Table({ columns, data }: TableProps) {
   return (
-    <div className="w-full px-4 py-2 md:max-w-250 lg:max-w-280 xl:max-w-300 2xl:max-w-400">
+    <div className="w-full px-4 py-2 ">
       <div className="w-full overflow-x-auto rounded-xl border border-border-dark/50 bg-surface-dark/20 shadow-lg">
         <table className="w-full min-w-200 text-center border-collapse">
           <thead>
