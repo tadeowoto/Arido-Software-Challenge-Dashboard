@@ -12,7 +12,7 @@ function handleRowClick(row: UserResponse) {
 
 export default function Table({ columns, data }: TableProps) {
   return (
-    <div className="w-full px-4 py-2">
+    <div className="w-full px-4 py-2 md:max-w-250 lg:max-w-280 xl:max-w-300 2xl:max-w-400">
       <div className="w-full overflow-x-auto rounded-xl border border-border-dark/50 bg-surface-dark/20 shadow-lg">
         <table className="w-full min-w-200 text-center border-collapse">
           <thead>
@@ -31,7 +31,7 @@ export default function Table({ columns, data }: TableProps) {
             {data.map((row, index) => (
               <tr
                 key={index}
-                className="border-b border-border-dark/40 hover:bg-white/2 transition-colors h-20 min-h-20"
+                className="border-b border-border-dark/40 hover:bg-white/2 transition-colors h-20 min-h-20 hover:cursor-pointer"
                 onClick={() => handleRowClick(row)}
               >
                 <td className="px-6 py-2 align-middle">
