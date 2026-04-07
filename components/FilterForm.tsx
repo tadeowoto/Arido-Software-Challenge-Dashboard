@@ -1,22 +1,40 @@
+import { Search, ChevronDown } from "lucide-react";
 export default function FilterForm() {
   return (
-    <form
-      action=""
-      className="w-full h-20  flex-col items-center justify-center rounded-lg p-4 md:flex md:items-center md:justify-center md:flex-row gap-4 bg-surface-dark/20 border border-border-dark/50"
-    >
-      <input type="text" placeholder="Search users..." />
-      <select name="" id="">
-        <option value="">All</option>
-        <option value="">Active</option>
-        <option value="">Inactive</option>
-      </select>
-      <select name="" id="">
-        <option value="">Security Groups</option>
-        <option value=""></option>
-        <option value="">User</option>
-        <option value="">Guest</option>
-        <option value="">Other</option>
-      </select>
+    <form className="flex flex-col md:flex-row gap-3 w-full mb-6">
+      <div className="relative flex-1 group">
+        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+          <Search className="h-4 w-4 text-text-secondary group-focus-within:text-highlight-blue transition-colors" />
+        </div>
+        <input
+          type="text"
+          placeholder="Search by username..."
+          className="w-full h-11 pl-10 pr-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white placeholder:text-text-secondary focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all"
+        />
+      </div>
+
+      <div className="relative min-w-40">
+        <select className="w-full h-11 px-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white appearance-none focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all">
+          <option value="">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+          <ChevronDown className="h-4 w-4 text-text-secondary" />
+        </div>
+      </div>
+
+      <div className="relative min-w-45">
+        <select className="w-full h-11 px-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white appearance-none focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all">
+          <option value="">Security Groups</option>
+          <option value="admin">Administrator</option>
+          <option value="user">User</option>
+          <option value="guest">Guest</option>
+        </select>
+        <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+          <ChevronDown className="h-4 w-4 text-text-secondary" />
+        </div>
+      </div>
     </form>
   );
 }
