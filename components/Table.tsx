@@ -1,8 +1,13 @@
+"use client";
 import { UserResponse } from "@/types/userTypes";
-
+import GroupItem from "./GroupItem";
+import StatusItem from "./StatusItem";
 interface TableProps {
   columns: { header: string; key: string }[];
   data: UserResponse[];
+}
+function handleRowClick(row: UserResponse) {
+  console.log(row);
 }
 
 export default function Table({ columns, data }: TableProps) {
@@ -27,20 +32,13 @@ export default function Table({ columns, data }: TableProps) {
               <tr
                 key={index}
                 className="border-b border-border-dark/40 hover:bg-white/2 transition-colors h-20 min-h-20"
+                onClick={() => handleRowClick(row)}
               >
                 <td className="px-6 py-2 align-middle">
                   <p className="font-medium text-white">{row.username}</p>
                 </td>
                 <td className="px-6 py-2 align-middle">
-                  <p
-                    className={`inline-block px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${
-                      row.status === "ACTIVE"
-                        ? "bg-green-500/10 text-green-400"
-                        : "bg-red-500/10 text-red-400"
-                    }`}
-                  >
-                    {row.status}
-                  </p>
+                  <StatusItem status={row.status} />
                 </td>
                 <td className="px-6 py-2 align-middle">
                   <p className="text-text-secondary">{row.createdAt || "—"}</p>
@@ -48,14 +46,7 @@ export default function Table({ columns, data }: TableProps) {
                 <td className="px-6 py-2 align-middle">
                   <div className="flex flex-col items-center justify-center gap-1">
                     {row.groups.map((group, index) => (
-                      <div key={index} className="flex flex-col items-center">
-                        <p className="text-highlight-orange font-bold text-[11px] uppercase tracking-tighter">
-                          {group.groupName}
-                        </p>
-                        <p className="text-highlight-blue text-[10px] font-black uppercase tracking-widest opacity-80">
-                          {group.accessLevel}
-                        </p>
-                      </div>
+                      <GroupItem key={index} group={group} />
                     ))}
                   </div>
                 </td>
