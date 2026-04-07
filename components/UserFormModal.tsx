@@ -1,4 +1,5 @@
 import { X, User, Lock, Shield } from "lucide-react";
+import groupsResponse from "@/mocks/groupsResponse.json";
 
 interface UserFormModalProps {
   open: boolean;
@@ -66,22 +67,25 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
             <div className="flex items-center gap-2 text-slate-700">
               <Shield className="w-4 h-4" />
               <label className="text-sm font-semibold">
-                Security Groups & Access Levels
+                Asignar Permisos y Grupos de acceso
               </label>
             </div>
           </div>
           <div className="flex gap-2 items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
             <select className="  flex-1 text-sm focus:outline-none text-slate-700">
-              <option>Maintenance</option>
+              <option value="">Grupos</option>
+              {groupsResponse.map((group, index) => (
+                <option key={index}>{group.name}</option>
+              ))}
             </select>
             <select className="w-24  text-black border border-slate-200 rounded-lg py-1 px-2 text-xs focus:outline-none">
+              <option value="">Permisos</option>
               <option>Read</option>
               <option>Write</option>
               <option>Admin</option>
               <option>Owner</option>
             </select>
           </div>
-
           <button className="w-full py-3 bg-[#0ea5e9] hover:bg-[#0284c7] text-white rounded-xl font-bold text-sm shadow-lg shadow-sky-500/20 transition-all active:scale-[0.98] mt-4">
             Create User
           </button>
