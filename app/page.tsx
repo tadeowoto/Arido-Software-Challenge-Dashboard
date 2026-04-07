@@ -6,7 +6,7 @@ import Header from "@/components/layout/Header";
 export default function Home() {
   return (
     <section className="w-full min-h-screen overflow-auto h-fit bg-bg-dark text-white flex flex-col">
-      <Header />
+      <Header where="Users" />
       <section className="w-full flex  items-center justify-between p-4">
         <FilterForm />
       </section>
