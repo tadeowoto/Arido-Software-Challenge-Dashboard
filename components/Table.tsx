@@ -2,15 +2,17 @@
 import { UserResponse } from "@/types/userTypes";
 import GroupItem from "./GroupItem";
 import StatusItem from "./StatusItem";
+import { useState } from "react";
+import UserModal from "./UserModal";
+
 interface TableProps {
   columns: { header: string; key: string }[];
   data: UserResponse[];
 }
-function handleRowClick(row: UserResponse) {
-  console.log(row);
-}
 
 export default function Table({ columns, data }: TableProps) {
+  const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
+
   return (
     <div className="w-full px-4 py-2 ">
       <div className="w-full overflow-x-auto rounded-xl border border-border-dark/50 bg-surface-dark/20 shadow-lg">
@@ -32,7 +34,7 @@ export default function Table({ columns, data }: TableProps) {
               <tr
                 key={index}
                 className="border-b border-border-dark/40 hover:bg-white/2 transition-colors h-20 min-h-20 hover:cursor-pointer"
-                onClick={() => handleRowClick(row)}
+                onClick={() => setSelectedUser(row)}
               >
                 <td className="px-6 py-2 align-middle">
                   <p className="font-medium text-white">{row.username}</p>
@@ -55,6 +57,13 @@ export default function Table({ columns, data }: TableProps) {
           </tbody>
         </table>
       </div>
+      {selectedUser && (
+        <UserModal
+          userInfo={selectedUser}
+          open={!!selectedUser}
+          onclose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 }
