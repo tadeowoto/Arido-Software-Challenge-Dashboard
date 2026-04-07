@@ -1,0 +1,27 @@
+[
+    {
+        "groupId": 1,
+        "name": "Planta de Ensamblaje",
+        "description": "Controla el acceso a las líneas de producción y montaje de piezas."
+    },
+    {
+        "groupId": 2,
+        "name": "Control de Calidad",
+        "description": "Usuarios encargados de la inspección de productos y reportes de fallas."
+    },
+    {
+        "groupId": 3,
+        "name": "Depósito y Logística",
+        "description": "Gestión de inventario y salida de producto terminado."
+    },
+    {
+        "groupId": 4,
+        "name": "Mantenimiento Técnico",
+        "description": "Acceso a manuales de maquinaria y registros de reparaciones."
+    },
+    {
+        "groupId": 5,
+        "name": "Administración",
+        "description": "Gestión de perfiles generales y recursos humanos."
+    }
+]
