@@ -1,13 +1,31 @@
 import { X, User, Lock, Shield } from "lucide-react";
 import groupsResponse from "@/mocks/groupsResponse.json";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface UserFormModalProps {
   open: boolean;
   onclose: () => void;
 }
 
+interface FormData {
+  username: string;
+  password: string;
+  group: string;
+  permission: string;
+}
+
 export default function UserFormModal({ open, onclose }: UserFormModalProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
   if (!open) return null;
+
+  const onSubmit = (data: FormData) => {
+    console.log("Form Data:", data);
+  };
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
@@ -34,7 +52,7 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
           </button>
         </div>
 
-        <form className="p-6 space-y-5">
+        <form className="p-6 space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-1.5">
             <label className="text-sm font-semibold text-slate-700">
               Nombre de Usuario
@@ -42,6 +60,7 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
             <div className="relative">
               <User className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
               <input
+                {...register("username", { required: true })}
                 type="text"
                 placeholder="Pedro Pérez..."
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all text-slate-900"
@@ -56,6 +75,7 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
             <div className="relative">
               <Lock className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
               <input
+                {...register("password", { required: true })}
                 type="password"
                 placeholder="********"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all text-slate-900"
@@ -72,18 +92,26 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
             </div>
           </div>
           <div className="flex gap-2 items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
-            <select className="  flex-1 text-sm focus:outline-none text-slate-700">
+            <select
+              {...register("group", { required: true })}
+              className="  flex-1 text-sm focus:outline-none text-slate-700"
+            >
               <option value="">Grupos</option>
               {groupsResponse.map((group, index) => (
-                <option key={index}>{group.name}</option>
+                <option key={index} value={group.name}>
+                  {group.name}
+                </option>
               ))}
             </select>
-            <select className="w-24  text-black border border-slate-200 rounded-lg py-1 px-2 text-xs focus:outline-none">
+            <select
+              {...register("permission", { required: true })}
+              className="w-24  text-black border border-slate-200 rounded-lg py-1 px-2 text-xs focus:outline-none"
+            >
               <option value="">Permisos</option>
-              <option>Read</option>
-              <option>Write</option>
-              <option>Admin</option>
-              <option>Owner</option>
+              <option value="read">Read</option>
+              <option value="write">Write</option>
+              <option value="admin">Admin</option>
+              <option value="owner">Owner</option>
             </select>
           </div>
           <button className="w-full py-3 bg-[#0ea5e9] hover:bg-[#0284c7] text-white rounded-xl font-bold text-sm shadow-lg shadow-sky-500/20 transition-all active:scale-[0.98] mt-4">
