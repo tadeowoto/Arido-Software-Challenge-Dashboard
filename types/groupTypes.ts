@@ -3,3 +3,8 @@ export type SecurityGroupResponse = {
     name: string;
     description: string;
 }
+
+export type SecurityGroupAndLevelAccess = {
+    groupId: number | undefined;
+    levelAccessId: number | undefined;
+}

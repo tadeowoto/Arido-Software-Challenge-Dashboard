@@ -1,7 +1,7 @@
 import { X, User, Lock, Shield, Plus, Trash2 } from "lucide-react";
 import groupsResponse from "@/mocks/groupsResponse.json";
 import { useForm, useFieldArray } from "react-hook-form";
-import type { Group } from "@/types/userTypes";
+import type { SecurityGroupAndLevelAccess } from "@/types/groupTypes";
 
 interface UserFormModalProps {
   open: boolean;
@@ -11,7 +11,7 @@ interface UserFormModalProps {
 interface FormData {
   username: string;
   password: string;
-  userGroups: Group[];
+  userGroupsAndLevelAccess: SecurityGroupAndLevelAccess[];
   permission: string;
 }
 
@@ -25,12 +25,14 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
     defaultValues: {
       username: "",
       password: "",
-      userGroups: [{ groupName: "", accessLevel: "" }],
+      userGroupsAndLevelAccess: [
+        { groupId: undefined, levelAccessId: undefined },
+      ],
     },
   });
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "userGroups",
+    name: "userGroupsAndLevelAccess",
   });
 
   if (!open) return null;
@@ -123,9 +125,9 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
                   },
                   pattern: {
                     value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,64}$/,
                     message:
-                      "La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales",
+                      "La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial, y entre 10 y 64 caracteres",
                   },
                 })}
                 type="password"
@@ -150,7 +152,9 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
               </div>
               <button
                 type="button"
-                onClick={() => append({ groupName: "", accessLevel: "" })}
+                onClick={() =>
+                  append({ groupId: undefined, levelAccessId: undefined })
+                }
                 className="text-xs flex items-center gap-1 text-sky-600 hover:text-sky-700 font-bold"
               >
                 <Plus className="w-3 h-3" /> Agregar Grupo
@@ -162,14 +166,18 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
                 <div className="flex gap-2 items-start p-3 bg-slate-50 rounded-xl border border-slate-100">
                   <div className="flex-1">
                     <select
-                      {...register(`userGroups.${index}.groupName`, {
-                        required: "Campo requerido",
-                      })}
+                      {...register(
+                        `userGroupsAndLevelAccess.${index}.groupId`,
+                        {
+                          required: "Campo requerido",
+                          valueAsNumber: true,
+                        },
+                      )}
                       className="w-full bg-transparent text-sm focus:outline-none text-slate-700"
                     >
                       <option value="">Seleccionar Grupo</option>
                       {groupsResponse.map((g, i) => (
-                        <option key={i} value={g.name}>
+                        <option key={i} value={g.groupId}>
                           {g.name}
                         </option>
                       ))}
@@ -178,15 +186,20 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
 
                   <div className="w-32">
                     <select
-                      {...register(`userGroups.${index}.accessLevel`, {
-                        required: "Requerido",
-                      })}
+                      {...register(
+                        `userGroupsAndLevelAccess.${index}.levelAccessId`,
+                        {
+                          required: "Requerido",
+                          valueAsNumber: true,
+                        },
+                      )}
                       className="w-full text-black border border-slate-200 rounded-lg py-1 px-2 text-xs focus:outline-none"
                     >
                       <option value="">Permisos</option>
-                      <option value="read">Read</option>
-                      <option value="write">Write</option>
-                      <option value="admin">Admin</option>
+                      <option value={1}>Read</option>
+                      <option value={2}>Write</option>
+                      <option value={3}>Admin</option>
+                      <option value={4}>Owner</option>
                     </select>
                   </div>
 
@@ -200,7 +213,7 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
                     </button>
                   )}
                 </div>
-                {errors.userGroups?.[index] && (
+                {errors.userGroupsAndLevelAccess?.[index] && (
                   <p className="text-[10px] text-red-500 px-2">
                     Ambos campos son obligatorios en esta fila
                   </p>
