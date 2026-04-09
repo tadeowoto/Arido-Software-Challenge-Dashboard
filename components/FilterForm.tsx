@@ -1,5 +1,8 @@
+import { groupService } from "@/services/groupService";
 import { Search, ChevronDown } from "lucide-react";
-export default function FilterForm() {
+export default async function FilterForm() {
+  const groups = await groupService.getAllGroups();
+
   return (
     <form className="flex flex-col md:flex-row gap-3 w-full mb-6">
       <div className="relative flex-1 group">
@@ -26,10 +29,12 @@ export default function FilterForm() {
 
       <div className="relative min-w-45">
         <select className="w-full h-11 px-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white appearance-none focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all">
-          <option value="">Security Groups</option>
-          <option value="admin">Administrator</option>
-          <option value="user">User</option>
-          <option value="guest">Guest</option>
+          <option value="">All Groups</option>
+          {groups.map((group) => (
+            <option key={group.groupId} value={group.groupId}>
+              {group.name}
+            </option>
+          ))}
         </select>
         <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
           <ChevronDown className="h-4 w-4 text-text-secondary" />
