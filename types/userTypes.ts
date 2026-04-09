@@ -4,9 +4,9 @@ export interface UserResponse {
     username: string;
     status: string;
     createdAt: string | null;
-    groups: group[];
+    groups: Group[];
 }
-interface group {
+export interface Group {
     groupName: string;
     accessLevel: string;
 }

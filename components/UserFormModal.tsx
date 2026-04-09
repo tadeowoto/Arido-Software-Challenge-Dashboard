@@ -1,6 +1,7 @@
-import { X, User, Lock, Shield } from "lucide-react";
+import { X, User, Lock, Shield, Plus, Trash2 } from "lucide-react";
 import groupsResponse from "@/mocks/groupsResponse.json";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
+import type { Group } from "@/types/userTypes";
 
 interface UserFormModalProps {
   open: boolean;
@@ -10,7 +11,7 @@ interface UserFormModalProps {
 interface FormData {
   username: string;
   password: string;
-  group: string;
+  userGroups: Group[];
   permission: string;
 }
 
@@ -19,7 +20,18 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+    control,
+  } = useForm<FormData>({
+    defaultValues: {
+      username: "",
+      password: "",
+      userGroups: [{ groupName: "", accessLevel: "" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "userGroups",
+  });
 
   if (!open) return null;
 
@@ -129,59 +141,72 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
           </div>
 
           <div className="space-y-3 pt-2">
-            <div className="flex items-center gap-2 text-slate-700">
-              <Shield className="w-4 h-4" />
-              <label className="text-sm font-semibold">
-                Asignar Permisos y Grupos de acceso
-              </label>
-            </div>
-          </div>
-          <div className="flex gap-2 items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
-            <div>
-              <select
-                {...register("group", {
-                  required: {
-                    value: true,
-                    message: "Debe seleccionar un grupo",
-                  },
-                })}
-                className="  flex-1 text-sm focus:outline-none text-slate-700"
+            <div className="flex items-center justify-between text-slate-700">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                <label className="text-sm font-semibold">
+                  Grupos y Permisos
+                </label>
+              </div>
+              <button
+                type="button"
+                onClick={() => append({ groupName: "", accessLevel: "" })}
+                className="text-xs flex items-center gap-1 text-sky-600 hover:text-sky-700 font-bold"
               >
-                <option value="">Grupos</option>
-                {groupsResponse.map((group, index) => (
-                  <option key={index} value={group.name}>
-                    {group.name}
-                  </option>
-                ))}
-              </select>
-              {errors.group && (
-                <p className="text-xs text-red-500 mt-1">
-                  {errors.group.message}
-                </p>
-              )}
+                <Plus className="w-3 h-3" /> Agregar Grupo
+              </button>
             </div>
-            <div>
-              <select
-                {...register("permission", {
-                  required: {
-                    value: true,
-                    message: "Debe seleccionar un permiso",
-                  },
-                })}
-                className="w-24  text-black border border-slate-200 rounded-lg py-1 px-2 text-xs focus:outline-none"
-              >
-                <option value="">Permisos</option>
-                <option value="read">Read</option>
-                <option value="write">Write</option>
-                <option value="admin">Admin</option>
-                <option value="owner">Owner</option>
-              </select>
-              {errors.permission && (
-                <p className="text-xs text-red-500 mt-1">
-                  {errors.permission.message}
-                </p>
-              )}
-            </div>
+
+            {fields.map((field, index) => (
+              <div key={field.id} className="space-y-2">
+                <div className="flex gap-2 items-start p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="flex-1">
+                    <select
+                      {...register(`userGroups.${index}.groupName`, {
+                        required: "Campo requerido",
+                      })}
+                      className="w-full bg-transparent text-sm focus:outline-none text-slate-700"
+                    >
+                      <option value="">Seleccionar Grupo</option>
+                      {groupsResponse.map((g, i) => (
+                        <option key={i} value={g.name}>
+                          {g.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="w-32">
+                    <select
+                      {...register(`userGroups.${index}.accessLevel`, {
+                        required: "Requerido",
+                      })}
+                      className="w-full text-black border border-slate-200 rounded-lg py-1 px-2 text-xs focus:outline-none"
+                    >
+                      <option value="">Permisos</option>
+                      <option value="read">Read</option>
+                      <option value="write">Write</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+
+                  {fields.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="text-slate-400 hover:text-red-500 p-1"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                {errors.userGroups?.[index] && (
+                  <p className="text-[10px] text-red-500 px-2">
+                    Ambos campos son obligatorios en esta fila
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
           <button className="w-full py-3 bg-[#0ea5e9] hover:bg-[#0284c7] text-white rounded-xl font-bold text-sm shadow-lg shadow-sky-500/20 transition-all active:scale-[0.98] mt-4">
             Create User
