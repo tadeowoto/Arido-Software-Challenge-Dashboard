@@ -1,18 +1,12 @@
 import { X, User, Lock, Shield, Plus, Trash2 } from "lucide-react";
 import groupsResponse from "@/mocks/groupsResponse.json";
 import { useForm, useFieldArray } from "react-hook-form";
-import type { SecurityGroupAndLevelAccess } from "@/types/groupTypes";
+import { userService } from "@/services/userService";
+import type { FormData } from "@/types/groupTypes";
 
 interface UserFormModalProps {
   open: boolean;
   onclose: () => void;
-}
-
-interface FormData {
-  username: string;
-  password: string;
-  userGroupsAndLevelAccess: SecurityGroupAndLevelAccess[];
-  permission: string;
 }
 
 export default function UserFormModal({ open, onclose }: UserFormModalProps) {
@@ -37,8 +31,15 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
 
   if (!open) return null;
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const res = await userService.create(data);
+      console.log("Usuario creado exitosamente:", res);
+      onclose();
+    } catch (error) {
+      console.error("Error al crear el usuario:", error);
+      alert(error instanceof Error ? error.message : "Error desconocido");
+    }
   };
 
   return (
