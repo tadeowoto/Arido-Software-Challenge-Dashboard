@@ -11,9 +11,10 @@ export const apiFetch = async(endpoint: string, options?: RequestInit) => {
     });
 
     if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: "Error desconocido" }));
-    throw new Error(error.message || "Error en la petición");
-  }
+    const errorData = await response.json().catch(() => ({}));
+    console.error("DETALLE DEL ERROR 400:", errorData); 
+    throw new Error(errorData.message || "Solicitud Incorrecta");
+}
 
     return response.json();
 }

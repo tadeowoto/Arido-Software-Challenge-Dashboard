@@ -13,9 +13,12 @@ export const userService = {
           username: userData.username,
           password: userData.password,
           status: "ACTIVE",
-          accessLevelId: userData.userGroupsAndLevelAccess[0].levelAccessId,
-          groupId: userData.userGroupsAndLevelAccess[0].groupId
+          securityGroups: userData.userGroupsAndLevelAccess.map(group => ({
+            groupId: Number(group.groupId),           
+            accessLevelId: Number(group.levelAccessId)
+          }))
         };
+        console.log("Enviando a Java:", JSON.stringify(newUser, null, 2));
      return apiFetch("/users", {
       method: "POST",
       body: JSON.stringify(newUser),
