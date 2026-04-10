@@ -6,6 +6,7 @@ export default function Footer() {
       <ul className="flex gap-5">
         <Link href="/">Users</Link>
         <Link href="/groups">Groups</Link>
+        <Link href="/user-groups">User Groups</Link>
       </ul>
     </footer>
   );

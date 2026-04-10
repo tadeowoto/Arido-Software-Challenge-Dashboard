@@ -1,4 +1,4 @@
-import { Users, LayoutGrid, ShieldCheck } from "lucide-react";
+import { Users, LayoutGrid, UserSearch } from "lucide-react";
 import Link from "next/link";
 
 export default function Sidebar() {
@@ -32,11 +32,11 @@ export default function Sidebar() {
           </li>
           <li>
             <Link
-              href="/access-levels"
+              href="/user-groups"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800/50 hover:text-white transition-all group"
             >
-              <ShieldCheck className="w-5 h-5 group-hover:text-[#0ea5e9]" />
-              Access Levels
+              <UserSearch className="w-5 h-5 group-hover:text-[#0ea5e9]" />
+              User Groups
             </Link>
           </li>
         </ul>
