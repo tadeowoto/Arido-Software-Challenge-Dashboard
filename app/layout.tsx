@@ -12,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col md:flex-row bg-bg-dark text-text-primary">
+      <body className="min-h-full flex flex-col md:flex-row bg-bg-light text-text-primary">
         <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
           <Sidebar />
         </aside>
