@@ -1,5 +1,6 @@
 import type { UserResponse } from "@/types/userTypes";
 import GroupItem from "./GroupItem";
+import { formatDate } from "@/utils/utils";
 
 interface UserModalProps {
   userInfo: UserResponse;
@@ -54,7 +55,7 @@ export default function UserModal({ userInfo, open, onclose }: UserModalProps) {
               Created
             </span>
             <span className="text-text-primary font-medium">
-              {userInfo.createdAt || "N/A"}
+              {formatDate(userInfo.createdAt || "N/A")}
             </span>
           </div>
 

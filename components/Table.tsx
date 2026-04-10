@@ -4,6 +4,7 @@ import GroupItem from "./GroupItem";
 import StatusItem from "./StatusItem";
 import { useState } from "react";
 import UserModal from "./UserModal";
+import { formatDate } from "@/utils/utils";
 
 interface TableProps {
   columns: { header: string; key: string }[];
@@ -45,7 +46,9 @@ export default function Table({ columns, data }: TableProps) {
                   <StatusItem status={row.status} />
                 </td>
                 <td className="px-6 py-2 align-middle">
-                  <p className="text-text-secondary">{row.createdAt || "—"}</p>
+                  <p className="text-text-secondary">
+                    {formatDate(row.createdAt || "N/A")}
+                  </p>
                 </td>
                 <td className="px-6 py-2 align-middle">
                   <div className="flex flex-col items-center justify-center gap-1">

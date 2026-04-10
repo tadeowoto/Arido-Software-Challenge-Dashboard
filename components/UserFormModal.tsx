@@ -1,8 +1,10 @@
 import { X, User, Lock, Shield, Plus, Trash2 } from "lucide-react";
-import groupsResponse from "@/mocks/groupsResponse.json";
+import { useEffect, useState } from "react";
+import type { SecurityGroupResponse } from "@/types/groupTypes";
 import { useForm, useFieldArray } from "react-hook-form";
 import { userService } from "@/services/userService";
 import type { FormData } from "@/types/groupTypes";
+import { groupService } from "@/services/groupService";
 
 interface UserFormModalProps {
   open: boolean;
@@ -10,11 +12,14 @@ interface UserFormModalProps {
 }
 
 export default function UserFormModal({ open, onclose }: UserFormModalProps) {
+  const [groupList, setGroupList] = useState<SecurityGroupResponse[]>([]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<FormData>({
     defaultValues: {
       username: "",
@@ -24,23 +29,29 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
       ],
     },
   });
+
+  useEffect(() => {
+    if (open) {
+      groupService.getAllGroups().then(setGroupList).catch(console.error);
+    } else {
+      reset();
+    }
+  }, [open, reset]);
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userGroupsAndLevelAccess",
   });
 
-  if (!open) return null;
-
   const onSubmit = async (data: FormData) => {
     try {
-      const res = await userService.create(data);
-      console.log("Usuario creado exitosamente:", res);
+      await userService.create(data);
       onclose();
     } catch (error) {
-      console.error("Error al crear el usuario:", error);
       alert(error instanceof Error ? error.message : "Error desconocido");
     }
   };
+
+  if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
@@ -79,27 +90,11 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
               <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
               <input
                 {...register("username", {
-                  required: {
-                    value: true,
-                    message: "El nombre de usuario es obligatorio",
-                  },
-                  minLength: {
-                    value: 3,
-                    message:
-                      "El nombre de usuario debe tener al menos 3 caracteres",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message:
-                      "El nombre de usuario debe tener como máximo 20 caracteres",
-                  },
-                  pattern: {
-                    value: /^[a-zA-Z0-9_]+$/,
-                    message: "Solo letras, números y guiones bajos",
-                  },
+                  required: "El nombre de usuario es obligatorio",
+                  minLength: { value: 3, message: "Mínimo 3 caracteres" },
                 })}
                 type="text"
-                placeholder="Pedro Pérez..."
+                placeholder="Ej: t.wotoszyn"
                 className="w-full pl-10 pr-4 py-2.5 bg-bg-light border border-border-light rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-highlight-blue/15 focus:border-highlight-blue transition-all text-text-primary placeholder:text-text-secondary"
               />
             </div>
@@ -118,20 +113,8 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
               <input
                 {...register("password", {
-                  required: {
-                    value: true,
-                    message: "La contraseña es obligatoria",
-                  },
-                  minLength: {
-                    value: 8,
-                    message: "La contraseña debe tener al menos 8 caracteres",
-                  },
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,64}$/,
-                    message:
-                      "Debe tener mayúscula, minúscula, número y carácter especial (10–64 chars)",
-                  },
+                  required: "La contraseña es obligatoria",
+                  minLength: { value: 8, message: "Mínimo 8 caracteres" },
                 })}
                 type="password"
                 placeholder="••••••••"
@@ -172,15 +155,15 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
                       {...register(
                         `userGroupsAndLevelAccess.${index}.groupId`,
                         {
-                          required: "Campo requerido",
+                          required: true,
                           valueAsNumber: true,
                         },
                       )}
                       className="w-full bg-transparent text-sm focus:outline-none text-text-primary"
                     >
                       <option value="">Seleccionar Grupo</option>
-                      {groupsResponse.map((g, i) => (
-                        <option key={i} value={g.groupId}>
+                      {groupList.map((g) => (
+                        <option key={g.groupId} value={g.groupId}>
                           {g.name}
                         </option>
                       ))}
@@ -192,7 +175,7 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
                       {...register(
                         `userGroupsAndLevelAccess.${index}.levelAccessId`,
                         {
-                          required: "Requerido",
+                          required: true,
                           valueAsNumber: true,
                         },
                       )}
@@ -216,16 +199,11 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
                     </button>
                   )}
                 </div>
-                {errors.userGroupsAndLevelAccess?.[index] && (
-                  <p className="text-[10px] text-red-500 px-1">
-                    Ambos campos son obligatorios en esta fila
-                  </p>
-                )}
               </div>
             ))}
           </div>
 
-          <button className="w-full py-2.5 bg-highlight-orange hover:opacity-90 text-white rounded-lg font-medium text-sm transition-all active:scale-[0.98] mt-2">
+          <button className="w-full py-2.5 bg-highlight-orange hover:opacity-90 text-white rounded-lg font-medium text-sm transition-all active:scale-[0.98] mt-2 shadow-lg shadow-highlight-orange/20">
             Create User
           </button>
         </form>
