@@ -1,13 +1,36 @@
 "use client";
-import { Search, UserCheck } from "lucide-react";
-import { useState } from "react";
+import { Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import debounce from "just-debounce-it";
+import { UserResponse } from "@/types/userTypes";
+import { userService } from "@/services/userService";
 
 export default function UserGroupsPage() {
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<UserResponse | null>(null);
+
+  const fetchUserGroups = useMemo(
+    () =>
+      debounce(async (username: string) => {
+        if (!username || username.length < 3) {
+          setResults(null);
+          return;
+        }
+
+        try {
+          const res = await userService.getUserByUsername(username);
+          setResults(res);
+        } catch (error) {
+          setResults(null);
+        }
+      }, 500),
+    [],
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-    console.log("Search query:", e.target.value);
+    const value = e.target.value;
+    setQuery(value);
+    fetchUserGroups(value);
   };
 
   return (
@@ -34,20 +57,22 @@ export default function UserGroupsPage() {
             />
           </div>
         </form>
-        <div className="w-full flex-1 min-h-100 bg-surface-dark/30 border border-border-dark border-dashed rounded-3xl flex flex-col items-center justify-center p-12 text-center gap-4">
-          <div className="w-20 h-20 bg-surface-dark rounded-full flex items-center justify-center border border-border-dark mb-2">
-            <UserCheck className="w-10 h-10 text-text-secondary opacity-50" />
-          </div>
 
-          <div className="space-y-1">
-            <h2 className="text-text-primary text-xl font-semibold">
-              Search for a user
-            </h2>
-            <p className="text-text-secondary max-w-xs mx-auto">
-              Type a username to see their security groups
+        {query.length >= 3 && results === null && (
+          <div className="text-center p-8 border border-border-dark rounded-3xl bg-surface-dark/20">
+            <p className="text-text-secondary italic">
+              No se encontró ningún usuario llamado {query}
             </p>
           </div>
-        </div>
+        )}
+
+        {results && (
+          <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h2 className="text-text-primary text-2xl font-bold mb-4">
+              Grupos de {results.username}
+            </h2>
+          </div>
+        )}
       </section>
     </main>
   );
