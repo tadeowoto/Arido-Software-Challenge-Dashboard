@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import debounce from "just-debounce-it";
 import { UserResponse } from "@/types/userTypes";
 import { userService } from "@/services/userService";
+import UserAccessTable from "@/components/UserAccessTable";
 
 export default function UserGroupsPage() {
   const [query, setQuery] = useState("");
@@ -82,13 +83,7 @@ export default function UserGroupsPage() {
           </div>
         )}
 
-        {results && (
-          <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 className="text-text-primary text-2xl font-bold mb-4">
-              Grupos de {results.username}
-            </h2>
-          </div>
-        )}
+        {results && <UserAccessTable user={results} />}
       </section>
     </main>
   );
