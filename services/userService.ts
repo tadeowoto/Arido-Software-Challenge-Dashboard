@@ -23,8 +23,9 @@ export const userService = {
       method: "POST",
       body: JSON.stringify(newUser),
     }); 
-  } 
+    },
 
-
-
+    getUserByUsername: (username: string): Promise<UserResponse> => {
+      return apiFetch(`/users/with-access/${username}`);
+    } 
 }
