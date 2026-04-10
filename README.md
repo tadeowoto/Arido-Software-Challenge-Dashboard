@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arido Users Dashboard
 
-## Getting Started
+Este proyecto es la interfaz administrativa para la gestión de usuarios y grupos de seguridad. Ha sido desarrollado con Next.js como núcleo, priorizando la experiencia de usuario (UX), el rendimiento y el tipado estricto.
 
-First, run the development server:
+## Tecnologias Principales
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js 15+ (App Router)
+- TypeScript
+- Tailwind CSS
+- React Hook Form
+- Sonner (Notificaciones)
+- Lucide React (Iconografía)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Arquitectura del Frontend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+La aplicacion se divide en capas para asegurar un mantenimiento sencillo y escalabilidad:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Capa de Servicios: Ubicada en /services, centraliza las llamadas a la API de Spring Boot mediante fetch, permitiendo que los componentes se centren solo en la presentacion.
+2. Capa de Tipado: Uso extensivo de interfaces de TypeScript para replicar los modelos del backend (UserResponse, SecurityGroupResponse, FormData), garantizando la integridad de los datos.
+3. Componentes Modulares: Division de la UI en componentes reutilizables como tablas dinamicas, modales y elementos de formulario especificos.
 
-## Learn More
+## Caracteristicas Implementadas
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Gestion de Usuarios y Grupos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Listado dinamico de usuarios con visualizacion de estados y grupos asignados.
+- Creacion de usuarios mediante un modal avanzado con soporte para asignacion multiple de grupos y niveles de acceso (Field Arrays).
+- Visualizacion de grupos de seguridad en formato de tarjetas.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Optimizaciones de Rendimiento
 
-## Deploy on Vercel
+- Optimizacion con Debounce: Implementado en los filtros de busqueda para retrasar la ejecucion de llamadas a la API hasta que el usuario deja de escribir. Esto reduce la carga del servidor y optimiza el rendimiento de la red.
+- Server Components: Aprovechamiento de las capacidades de Next.js para renderizar datos en el servidor y optimizar el tiempo de carga inicial.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Experiencia de Usuario (UX)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Skeleton Screens: Implementacion de estados de carga personalizados (loading.tsx) que imitan la estructura de tablas y cards para eliminar el salto visual (CLS).
+- Feedback con Sonner: Sistema de notificaciones Toast que informa en tiempo real sobre el estado de las operaciones (Cargando, Exito, Error) sin bloquear la interfaz.
+- Validaciones Robustas: Reglas de negocio aplicadas directamente en los inputs (longitud, caracteres especiales, fortaleza de password) sincronizadas con los requisitos del backend.
+
+## Integracion con el Backend
+
+El dashboard se comunica con una API REST construida en Java Spring Boot (puerto 8080).

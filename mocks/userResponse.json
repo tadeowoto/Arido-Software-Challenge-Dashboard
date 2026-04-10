@@ -1,0 +1,146 @@
+[
+    {
+        "userId": 1,
+        "username": "juan paco pedro",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Planta de Ensamblaje",
+                "accessLevel": "Administrator"
+            },
+            {
+                "groupName": "Control de Calidad",
+                "accessLevel": "Read"
+            }
+        ]
+    },
+    {
+        "userId": 2,
+        "username": "maria lopez",
+        "status": "INACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Planta de Ensamblaje",
+                "accessLevel": "Read"
+            }
+        ]
+    },
+    {
+        "userId": 3,
+        "username": "carlos rodriguez",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Control de Calidad",
+                "accessLevel": "Administrator"
+            }
+        ]
+    },
+    {
+        "userId": 4,
+        "username": "ana martinez",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Logística",
+                "accessLevel": "Write"
+            },
+            {
+                "groupName": "Almacén",
+                "accessLevel": "Read"
+            }
+        ]
+    },
+    {
+        "userId": 5,
+        "username": "diego garcia",
+        "status": "INACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Mantenimiento",
+                "accessLevel": "Administrator"
+            }
+        ]
+    },
+    {
+        "userId": 6,
+        "username": "sofia sanchez",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Recursos Humanos",
+                "accessLevel": "Write"
+            },
+            {
+                "groupName": "Nómina",
+                "accessLevel": "Read"
+            }
+        ]
+    },
+    {
+        "userId": 7,
+        "username": "luis hernandez",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Planta de Ensamblaje",
+                "accessLevel": "Read"
+            },
+            {
+                "groupName": "Control de Calidad",
+                "accessLevel": "Write"
+            }
+        ]
+    },
+    {
+        "userId": 8,
+        "username": "laura torres",
+        "status": "INACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Sistemas",
+                "accessLevel": "Administrator"
+            },
+            {
+                "groupName": "Mantenimiento",
+                "accessLevel": "Read"
+            }
+        ]
+    },
+    {
+        "userId": 9,
+        "username": "pablo ruiz",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Ventas",
+                "accessLevel": "Read"
+            }
+        ]
+    },
+    {
+        "userId": 10,
+        "username": "elena morales",
+        "status": "ACTIVE",
+        "createdAt": null,
+        "groups": [
+            {
+                "groupName": "Finanzas",
+                "accessLevel": "Write"
+            },
+            {
+                "groupName": "Auditoría",
+                "accessLevel": "Read"
+            }
+        ]
+    }
+]
