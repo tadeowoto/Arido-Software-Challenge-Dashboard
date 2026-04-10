@@ -4,13 +4,14 @@ interface GroupItemProps {
 
 export default function GroupItem({ group }: GroupItemProps) {
   return (
-    <div className="flex flex-col items-center">
-      <p className="text-highlight-orange font-bold text-[11px] uppercase tracking-tighter">
+    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-bg-light border border-border-light">
+      <span className="text-[11px] font-medium text-text-primary">
         {group.groupName}
-      </p>
-      <p className="text-highlight-blue text-[10px] font-black uppercase tracking-widest opacity-80">
+      </span>
+      <span className="text-[10px] text-text-secondary">·</span>
+      <span className="text-[11px] font-medium text-highlight-blue">
         {group.accessLevel}
-      </p>
+      </span>
     </div>
   );
 }

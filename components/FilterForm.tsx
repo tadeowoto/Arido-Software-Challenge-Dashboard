@@ -12,12 +12,12 @@ export default async function FilterForm() {
         <input
           type="text"
           placeholder="Search by username..."
-          className="w-full h-11 pl-10 pr-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white placeholder:text-text-secondary focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all"
+          className="w-full h-10 pl-10 pr-4 bg-surface-light border border-border-light rounded-lg text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-highlight-blue focus:ring-2 focus:ring-highlight-blue/10 transition-all"
         />
       </div>
 
       <div className="relative min-w-40">
-        <select className="w-full h-11 px-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white appearance-none focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all">
+        <select className="w-full h-10 px-4 bg-surface-light border border-border-light rounded-lg text-sm text-text-primary appearance-none focus:outline-none focus:border-highlight-blue focus:ring-2 focus:ring-highlight-blue/10 transition-all">
           <option value="">All Statuses</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -28,7 +28,7 @@ export default async function FilterForm() {
       </div>
 
       <div className="relative min-w-45">
-        <select className="w-full h-11 px-4 bg-surface-dark/10 border border-border-dark/50 rounded-xl text-sm text-white appearance-none focus:outline-none focus:border-highlight-blue/50 focus:bg-surface-dark/20 transition-all">
+        <select className="w-full h-10 px-4 bg-surface-light border border-border-light rounded-lg text-sm text-text-primary appearance-none focus:outline-none focus:border-highlight-blue focus:ring-2 focus:ring-highlight-blue/10 transition-all">
           <option value="">All Groups</option>
           {groups.map((group) => (
             <option key={group.groupId} value={group.groupId}>

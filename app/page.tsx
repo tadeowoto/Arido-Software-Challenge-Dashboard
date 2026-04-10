@@ -8,12 +8,9 @@ export default async function Home() {
   const users = await userService.getAll();
 
   return (
-    <section className="w-full min-h-screen overflow-auto h-fit bg-bg-dark text-white flex flex-col">
+    <section className="w-full min-h-screen overflow-auto h-fit bg-bg-light text-text-primary flex flex-col">
       <Header where="Users" />
-      <section className="w-full flex  items-center justify-between p-4">
-        <FilterForm />
-      </section>
-      <section className="w-full  flex items-center justify-center p-4">
+      <section className="w-full mt-10 flex flex-col items-center justify-center px-6 pb-6">
         <Table columns={USER_COLUMNS} data={users} />
       </section>
     </section>

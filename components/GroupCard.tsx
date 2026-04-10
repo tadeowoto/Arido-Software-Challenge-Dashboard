@@ -7,24 +7,25 @@ interface GroupCardProps {
 
 export default function GroupCard({ name, description }: GroupCardProps) {
   return (
-    <article className="bg-surface-dark rounded-2xl p-6 shadow-xl border border-border-dark hover:border-highlight-blue/50 transition-all duration-300 group">
-      <header className="flex items-center gap-4 mb-4">
-        <div className="p-3 bg-highlight-blue/10 rounded-xl text-highlight-blue group-hover:bg-highlight-blue group-hover:text-bg-dark transition-colors duration-300">
-          <Shield className="w-6 h-6" />
+    <article className="bg-surface-light rounded-xl p-5 border border-border-light hover:border-highlight-blue/40 hover:shadow-sm transition-all duration-200 group">
+      <header className="flex items-center gap-3 mb-3">
+        <div className="p-2.5 bg-highlight-orange/10 rounded-lg text-highlight-orange group-hover:bg-highlight-orange group-hover:text-white transition-colors duration-200">
+          <Shield className="w-5 h-5" />
         </div>
-        <h2 className="text-xl font-bold text-text-primary lowercase first-letter:uppercase">
+        <h2 className="text-base font-semibold text-text-primary lowercase first-letter:uppercase">
           {name}
         </h2>
       </header>
 
-      <p className="text-text-secondary text-sm leading-relaxed mb-6">
+      <p className="text-text-secondary text-sm leading-relaxed mb-4">
         {description ||
           "Sin descripción disponible para este grupo de seguridad."}
       </p>
-      <div className="h-px bg-border-dark w-full" />
 
-      <footer className="mt-4 flex items-center justify-end">
-        <span className="px-3 py-1 bg-highlight-orange/10 text-highlight-orange text-xs rounded-full border border-highlight-orange/20">
+      <div className="h-px bg-border-light w-full" />
+
+      <footer className="mt-3 flex items-center justify-end">
+        <span className="px-2.5 py-1 bg-highlight-blue/8 text-highlight-blue text-[11px] font-medium rounded-full border border-highlight-blue/20">
           Activo
         </span>
       </footer>

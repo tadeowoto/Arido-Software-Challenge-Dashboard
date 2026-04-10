@@ -35,40 +35,42 @@ export default function UserGroupsPage() {
   };
 
   return (
-    <main className="w-full min-h-screen bg-bg-dark flex flex-col">
-      <header className="w-full h-16 border-b border-border-dark flex items-center px-8 gap-4 bg-bg-dark/50 backdrop-blur-md sticky top-0 z-10">
-        <h1 className="text-text-primary font-bold text-lg tracking-tight">
+    <main className="w-full min-h-screen bg-bg-light flex flex-col">
+      <header className="w-full h-16 border-b border-border-light flex items-center px-8 gap-3 bg-surface-light sticky top-0 z-10">
+        <div className="w-1 h-6 rounded-full bg-highlight-orange" />
+        <h1 className="text-text-primary font-semibold text-lg">
           User Security Groups
         </h1>
       </header>
+
       <section className="flex-1 flex flex-col items-center p-8 gap-6 max-w-5xl mx-auto w-full">
         <form
           onSubmit={(e) => e.preventDefault()}
           className="w-full flex gap-2"
         >
           <div className="relative flex-1 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary w-5 h-5 group-focus-within:text-highlight-blue transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary w-4 h-4 group-focus-within:text-highlight-blue transition-colors" />
             <input
               type="search"
               value={query}
               onChange={handleChange}
               name="username"
               placeholder="Search by username..."
-              className="w-full h-12 bg-surface-dark border border-border-dark rounded-xl pl-12 pr-4 text-text-primary focus:border-highlight-blue/50 outline-none transition-all shadow-lg"
+              className="w-full h-10 bg-surface-light border border-border-light rounded-lg pl-11 pr-4 text-text-primary text-sm focus:border-highlight-blue focus:ring-2 focus:ring-highlight-blue/10 outline-none transition-all"
             />
           </div>
         </form>
 
         {!query && (
-          <div className="w-full flex-1 min-h-100 bg-surface-dark/30 border border-border-dark border-dashed rounded-3xl flex flex-col items-center justify-center p-12 text-center gap-4">
-            <div className="w-20 h-20 bg-surface-dark rounded-full flex items-center justify-center border border-border-dark mb-2">
-              <UserCheck className="w-10 h-10 text-text-secondary opacity-50" />
+          <div className="w-full flex-1 min-h-100 bg-surface-light border border-border-light border-dashed rounded-xl flex flex-col items-center justify-center p-12 text-center gap-4">
+            <div className="w-16 h-16 bg-highlight-orange/10 rounded-full flex items-center justify-center mb-2">
+              <UserCheck className="w-8 h-8 text-highlight-orange" />
             </div>
             <div className="space-y-1">
-              <h2 className="text-text-primary text-xl font-semibold">
+              <h2 className="text-text-primary text-base font-semibold">
                 Search for a user
               </h2>
-              <p className="text-text-secondary max-w-xs mx-auto">
+              <p className="text-text-secondary text-sm max-w-xs mx-auto">
                 Type a username to see their security groups
               </p>
             </div>
@@ -76,9 +78,10 @@ export default function UserGroupsPage() {
         )}
 
         {query.length >= 3 && results === null && (
-          <div className="text-center p-8 border border-border-dark rounded-3xl bg-surface-dark/20 w-full">
-            <p className="text-text-secondary italic">
-              No se encontró ningún usuario llamado {query}
+          <div className="text-center p-8 border border-border-light rounded-xl bg-surface-light w-full">
+            <p className="text-text-secondary text-sm">
+              No se encontró ningún usuario llamado{" "}
+              <span className="text-text-primary font-medium">{query}</span>
             </p>
           </div>
         )}
