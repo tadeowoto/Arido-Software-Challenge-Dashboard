@@ -5,6 +5,7 @@ import debounce from "just-debounce-it";
 import { UserResponse } from "@/types/userTypes";
 import { userService } from "@/services/userService";
 import UserAccessTable from "@/components/UserAccessTable";
+import { formatDate } from "@/utils/utils";
 
 export default function UserGroupsPage() {
   const [query, setQuery] = useState("");
@@ -13,14 +14,16 @@ export default function UserGroupsPage() {
   const fetchUserGroups = useMemo(
     () =>
       debounce(async (username: string) => {
-        if (!username || username.length < 3) {
-          setResults(null);
-          return;
-        }
-
         try {
           const res = await userService.getUserByUsername(username);
-          setResults(res);
+
+          if (res) {
+            const formattedRes = {
+              ...res,
+              createdAt: formatDate(res.createdAt),
+            };
+            setResults(formattedRes);
+          }
         } catch (error) {
           setResults(null);
         }

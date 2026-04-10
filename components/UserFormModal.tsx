@@ -1,5 +1,5 @@
 import { X, User, Lock, Shield, Plus, Trash2 } from "lucide-react";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import type { SecurityGroupResponse } from "@/types/groupTypes";
 import { useForm, useFieldArray } from "react-hook-form";
 import { userService } from "@/services/userService";
