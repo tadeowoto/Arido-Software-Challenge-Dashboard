@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import Sidebar from "@/components/layout/Sidebar";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -17,7 +18,10 @@ export default function RootLayout({
           <Sidebar />
         </aside>
         <div className="flex flex-col flex-1 md:pl-64">
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            {children}
+            <Toaster position="bottom-right" richColors />
+          </main>
           <footer className="md:hidden sticky bottom-0 z-50">
             <Footer />
           </footer>
