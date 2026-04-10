@@ -38,6 +38,10 @@ La aplicacion se divide en capas para asegurar un mantenimiento sencillo y escal
 - Feedback con Sonner: Sistema de notificaciones Toast que informa en tiempo real sobre el estado de las operaciones (Cargando, Exito, Error) sin bloquear la interfaz.
 - Validaciones Robustas: Reglas de negocio aplicadas directamente en los inputs (longitud, caracteres especiales, fortaleza de password) sincronizadas con los requisitos del backend.
 
-## Integracion con el Backend
+### 4. Imagenes
 
-El dashboard se comunica con una API REST construida en Java Spring Boot (puerto 8080).
+<img width="1920" height="954" alt="Screenshot 2026-04-10 at 7 40 50 PM" src="https://github.com/user-attachments/assets/16cfa0bf-b7d9-4cd0-8f6a-0286641fcfba" />
+<img width="1920" height="954" alt="Screenshot 2026-04-10 at 7 42 11 PM" src="https://github.com/user-attachments/assets/4ce257c2-9830-4c87-8fab-b0807dc35a38" />
+<img width="1920" height="958" alt="Screenshot 2026-04-10 at 7 41 51 PM" src="https://github.com/user-attachments/assets/9763d407-1016-4833-b9bb-36ff6c7d0fdf" />
+<img width="428" height="868" alt="Screenshot 2026-04-10 at 7 42 34 PM" src="https://github.com/user-attachments/assets/1a3e8c3e-e918-4325-a8e3-d713d7bbd702" />
+<img width="1920" height="956" alt="Screenshot 2026-04-10 at 7 43 00 PM" src="https://github.com/user-attachments/assets/acc7c8d0-2655-4b6a-8984-9fd42f42ef56" />
