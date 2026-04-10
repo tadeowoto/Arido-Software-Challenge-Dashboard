@@ -5,6 +5,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { userService } from "@/services/userService";
 import type { FormData } from "@/types/groupTypes";
 import { groupService } from "@/services/groupService";
+import { toast } from "sonner";
 
 interface UserFormModalProps {
   open: boolean;
@@ -43,10 +44,18 @@ export default function UserFormModal({ open, onclose }: UserFormModalProps) {
   });
 
   const onSubmit = async (data: FormData) => {
+    const toastId = toast.loading("Creando usuario...");
     try {
       await userService.create(data);
+      toast.success("Usuario creado correctamente", {
+        id: toastId,
+        description: `El usuario ${data.username} ya tiene acceso.`,
+      });
       onclose();
     } catch (error) {
+      toast.error("Error al crear usuario", {
+        id: toastId,
+      });
       alert(error instanceof Error ? error.message : "Error desconocido");
     }
   };
