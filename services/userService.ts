@@ -18,7 +18,6 @@ export const userService = {
             accessLevelId: Number(group.levelAccessId)
           }))
         };
-        console.log("Enviando a Java:", JSON.stringify(newUser, null, 2));
      return apiFetch("/users", {
       method: "POST",
       body: JSON.stringify(newUser),

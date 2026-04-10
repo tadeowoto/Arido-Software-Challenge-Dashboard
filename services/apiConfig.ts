@@ -10,11 +10,17 @@ export const apiFetch = async(endpoint: string, options?: RequestInit) => {
         },
     });
 
-    if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    console.error("DETALLE DEL ERROR 400:", errorData); 
-    throw new Error(errorData.message || "Solicitud Incorrecta");
-}
+    if (response.status === 404) {
+        return null; 
+    }
 
-    return response.json();
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Error en la petición");
+    }
+
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+        return response.json();
+    }
 }
